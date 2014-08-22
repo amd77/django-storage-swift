@@ -80,12 +80,12 @@ class SwiftStorage(Storage):
                 split_result[2] = (split_override[2] +
                                    split_derived[2]).replace('//', '/')
                 self.base_url = urlparse.urlunsplit(split_result)
-
-            self.base_url = urlparse.urljoin(self.base_url,
-                                             self.container_name)
-            self.base_url += '/'
         else:
             self.base_url = self.override_base_url
+
+        self.base_url = urlparse.urljoin(self.base_url,
+                                         self.container_name)
+        self.base_url += '/'
 
     def _open(self, name, mode='rb'):
         headers, content = swiftclient.get_object(self.storage_url, self.token,
